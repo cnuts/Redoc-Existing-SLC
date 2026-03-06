@@ -1,0 +1,988 @@
+
+# Legacy Database Schema
+
+Generated: 2026-03-06T22:10:05.192Z
+
+## Sources
+- slc.df
+- data/BatchOrder.df
+- data/MfgOrd.df
+- data/Serial-MfgOrdNum.df
+- data/Serial-PDNBatchID.df
+- data/delta-mfgordnum.df
+- data/delta-product-hybrid.df
+
+## Summary
+- Sequences: 5
+- Tables: 31
+- Fields: 480
+- Indexes: 61
+- Field updates from delta files: 3
+
+## Sequences
+| Sequence | Initial | Increment | Min | Max | Cycle |
+|---|---:|---:|---:|---:|---|
+| CommentId | 0 | 1 | 0 | 999999 | yes |
+| CommSeqID | 0 | 1 | 0 |  | yes |
+| GoalSequence | 1 | 1 | 1 |  | no |
+| PalletNum | 0 | 1 | 0 | 9999 | yes |
+| SessionId | 0 | 1 | 0 |  | yes |
+
+## Tables
+### AppFunction
+
+- Description: Application Functions: menus, programs, buttons, objects
+- Dump name: appfunct
+- Sources: slc.df
+
+#### Fields
+| Field | Type | Order | Initial | Format | Description |
+|---|---|---:|---|---|---|
+| ID | character | 10 | "" | "x(50)" | Period separated Application Functions |
+| Description | character | 20 | "" | "x(60)" |  |
+
+#### Indexes
+| Index | Primary | Unique | Fields |
+|---|---|---|---|
+| ID-index | yes | yes | ID ASCENDING |
+
+### BatchOrder
+
+- Dump name: batchorder
+- Sources: data/BatchOrder.df
+
+#### Fields
+| Field | Type | Order | Initial | Format | Description |
+|---|---|---:|---|---|---|
+| BatchID | int64 | 10 | "0" | ">>>>>>>>>9" |  |
+| BatchDate | date | 20 | ? | "99/99/99" |  |
+| OrdNum | character | 30 | "" | "x(10)" |  |
+| OrdRefNum | int64 | 40 | "0" | ">>>>>>>>>9" |  |
+| OrdRefLine | int64 | 50 | "0" | ">>>>>>>>>9" |  |
+| ProdCode | integer | 60 | "0" | ">>>>9" |  |
+
+#### Indexes
+| Index | Primary | Unique | Fields |
+|---|---|---|---|
+| BatchDate | yes | no | BatchDate ASCENDING |
+
+### CommDtl
+
+- Description: Child of CommHdr, provides message body; can be multiple details of the header; when all details have been added, ReadyToSend should be set=yes
+- Dump name: commdtl
+- Sources: slc.df
+
+#### Fields
+| Field | Type | Order | Initial | Format | Description |
+|---|---|---:|---|---|---|
+| CommSeqID | integer | 10 | "0" | "->>>>>>9" | From Sequence |
+| DetailNumber | integer | 20 | "0" | ">>>>>>9" |  |
+| Body | character | 30 | "" | "x(4096)" |  |
+| Blob | raw | 40 | "" | "X(8)" | For binary data, such as .bmp |
+
+#### Indexes
+| Index | Primary | Unique | Fields |
+|---|---|---|---|
+| DetailIDX | yes | yes | CommSeqID ASCENDING, DetailNumber ASCENDING |
+
+### CommHdr
+
+- Description: Communications Header used to send messages over the CFS network, including Inven, Production, and CTS DB's
+- Dump name: commhdr
+- Sources: slc.df
+
+#### Fields
+| Field | Type | Order | Initial | Format | Description |
+|---|---|---:|---|---|---|
+| CommSeqID | integer | 10 | "0" | "->,>>>,>>9" | From Sequence |
+| DateRead | date | 20 | ? | "99/99/99" | Null if not read / processed yet |
+| DateSent | date | 30 | ? | "99/99/99" | Null if not yet sent |
+| Deleted | logical | 40 | "no" | "yes/no" | Logical Deletion |
+| Priority | integer | 50 | "0" | "->>>>9" |  |
+| SendTo | character | 70 | "" | "x(20)" |  |
+| SentFrom | character | 80 | "" | "x(20)" |  |
+| Subject | character | 90 | "" | "x(100)" |  |
+| WasRead | logical | 100 | "no" | "yes/no" |  |
+| Type | character | 110 | "" | "x(8)" |  |
+| CommSeqIDThread | integer | 120 | "0" | ">>>>>>9" |  |
+| TransType | integer | 130 | "0" | ">>>>>>9" |  |
+| ICIProcessed | logical | 140 | "no" | "yes/no" |  |
+| Origin | character | 150 | "" | "x(15)" |  |
+| TimeSent | character | 160 | "" | "x(8)" |  |
+| TimeRead | character | 170 | "" | "x(8)" |  |
+
+#### Indexes
+| Index | Primary | Unique | Fields |
+|---|---|---|---|
+| CommSeqIDX | yes | yes | CommSeqID ASCENDING |
+| CommSeqThreadIDX | no | no | CommSeqIDThread ASCENDING |
+| ICIProcessedIDX | no | no | ICIProcessed ASCENDING |
+| MsgDeletedIDX | no | no | Deleted ASCENDING |
+| PriorityIDX | no | no | Priority ASCENDING |
+| SendToIDX | no | no | SendTo ASCENDING |
+| SentFromIDX | no | no | SentFrom ASCENDING |
+| ToDateIDX | no | no | SendTo ASCENDING, DateSent ASCENDING |
+| WasReadICX | no | no | WasRead ASCENDING |
+
+### ConfigOptionMaster
+
+- Description: This is the master table of all possible config options
+- Dump name: configo1
+- Sources: slc.df
+
+#### Fields
+| Field | Type | Order | Initial | Format | Description |
+|---|---|---:|---|---|---|
+| OptionName | character | 20 | "" | "x(30)" | Config option name |
+| OptionDescr | character | 30 | "" | "x(60)" |  |
+| OptionValue | character | 40 | "" | "x(60)" | Default config option value |
+| AcceptableValues | character | 50 | "" | "X(60)" |  |
+| OperatorEdits | logical | 60 | "Operator" | "Operator/Internal" | Is this an operator maintained Option?  |
+
+#### Indexes
+| Index | Primary | Unique | Fields |
+|---|---|---|---|
+| OptionName | yes | yes | OptionName ASCENDING |
+
+### CrossRef
+
+- Dump name: crossref
+- Sources: slc.df
+
+#### Fields
+| Field | Type | Order | Initial | Format | Description |
+|---|---|---:|---|---|---|
+| Application | character | 10 | ? | "X(15)" |  |
+| ID | character | 20 | ? | "X(30)" |  |
+| Descr | character | 30 | ? | "X(30)" |  |
+
+#### Indexes
+| Index | Primary | Unique | Fields |
+|---|---|---|---|
+| ApplicationIDX | no | no | Application ASCENDING |
+| IDIdx | no | no | ID ASCENDING |
+| UniqueAppCommIdx | yes | yes | Application ASCENDING, ID ASCENDING |
+
+### DateCode
+
+- Dump name: datecode
+- Sources: slc.df
+
+#### Fields
+| Field | Type | Order | Initial | Format | Description |
+|---|---|---:|---|---|---|
+| Date | date | 10 | ? | "99/99/9999" |  |
+| Code | character | 20 | "" | "X(10)" |  |
+
+#### Indexes
+| Index | Primary | Unique | Fields |
+|---|---|---|---|
+| dateidx | yes | yes | Date ASCENDING |
+
+### Device
+
+- Dump name: device
+- Sources: slc.df
+
+#### Fields
+| Field | Type | Order | Initial | Format | Description |
+|---|---|---:|---|---|---|
+| DeviceID | character | 10 | "" | "x(20)" |  |
+| ComPort | integer | 20 | "0" | ">>9" |  |
+| NetworkID | character | 30 | "" | "x(15)" |  |
+| IPAddress | character | 40 | "" | "x(15)" |  |
+| Parity | character | 50 | "" | "x(8)" |  |
+| Baud | integer | 60 | "0" | ">>>>>9" |  |
+| DataBits | integer | 70 | "0" | "9" |  |
+| StopBits | integer | 80 | "0" | "9" |  |
+| TimeoutMS | integer | 90 | "0" | ">>>,>>9" |  |
+| Model | character | 100 | "" | "x(15)" |  |
+| FlowControl | logical | 110 | "no" | "yes/no" |  |
+| InputBufferSize | integer | 120 | "0" | ">,>>>,>>9" |  |
+| OutputBufferSize | integer | 130 | "0" | ">,>>>,>>9" |  |
+| DTREnable | logical | 140 | "no" | "yes/no" |  |
+| Descr | character | 150 | "" | "x(25)" |  |
+| GenericPrinter | logical | 160 | "no" | "yes/no" | Generic is like an HP line prtr, vs something like an I-class label printer |
+| Attached | logical | 170 | "no" | "yes/no" |  |
+
+#### Indexes
+| Index | Primary | Unique | Fields |
+|---|---|---|---|
+| DeviceID | yes | yes | DeviceID ASCENDING |
+
+### ErrorMsgs
+
+- Description: Holds Error Codes
+- Dump name: errormsg
+- Sources: slc.df
+
+#### Fields
+| Field | Type | Order | Initial | Format | Description |
+|---|---|---:|---|---|---|
+| ReturnCode | integer | 10 | "0" | "->,>>>,>>9" | Integer error code |
+| ErrorText | character | 30 | "" | "X(80)" | Error Message Text |
+
+#### Indexes
+| Index | Primary | Unique | Fields |
+|---|---|---|---|
+| RC | yes | yes | ReturnCode ASCENDING |
+
+### Goals
+
+- Dump name: goals
+- Sources: slc.df
+
+#### Fields
+| Field | Type | Order | Initial | Format | Description |
+|---|---|---:|---|---|---|
+| ProdCode | integer | 20 | ? | "99999" |  |
+| LimitBy | character | 30 | "Count" | "X(8)" |  |
+| TargetLevel | decimal | 40 | ? | "->>,>>9.99" |  |
+| OrdNum | character | 50 | ? | "x(10)" | Customer Order Number Input to Inven |
+| OrdRefLine | integer | 60 | ? | ">>>9" |  |
+| TgtCompDate | date | 70 | ? | "99/99/9999" |  |
+| GoalStatus | character | 90 | "" | "x(10)" |  |
+| Tolerance | decimal | 110 | ? | "->>,>>9.99" |  |
+| AllScaleTotalCount | integer | 120 | "0" | "->,>>>,>>9" |  |
+| AllScaleTotalNetWgt | decimal | 130 | "0" | "->>,>>9.99" |  |
+| AllScaleTotalLabelWgt | decimal | 140 | "0" | "->>,>>9.99" |  |
+| CurrentCount | integer | 150 | "0" | "->,>>>,>>9" |  |
+| CurrentLabelWgt | decimal | 160 | "0" | "->>,>>9.99" |  |
+| CurrentNetWgt | decimal | 170 | "0" | "->>,>>9.99" |  |
+| GoalID | integer | 180 | ? | "->>>>>>9" |  |
+| ScalesInGoal | character | 190 | ? | "x(10)" |  |
+| WarningLevel | decimal | 200 | ? | "-zz,zz9.99" | Qty/amount to warn operator before goal is achieved |
+| SentToServer | logical | 210 | "no" | "yes/no" |  |
+| DateStatusChange | date | 220 | ? | "99/99/99" | Date Achieved / Canceled |
+| Description | character | 230 | ? | "x(25)" |  |
+| Priority | integer | 240 | ? | "->>9" |  |
+| WOLine | integer | 260 | ? | "99" | Physical Production Line number |
+| CustomerNumber | character | 270 | ? | "X(10)" | End customer ID, input to Inven |
+| CustomerName | character | 280 | ? | "X(35)" |  |
+| SellByDate | date | 290 | ? | "99/99/99" |  |
+| UnitPrice | decimal | 300 | ? | ">>,>>9.999" |  |
+| UnitTare | decimal | 310 | ? | "->>,>>9.999" |  |
+| Grade | character | 320 | ? | "X(3)" |  |
+| TrayCount | integer | 340 | ? | ">,>>>,>>9" |  |
+| PkgDesc1Size | character | 350 | ? | "X(01)" |  |
+| PkgDesc2Size | character | 360 | ? | "X(1)" |  |
+| PkgDesc3Size | character | 370 | ? | "X(1)" |  |
+| PkgDesc1 | character | 380 | ? | "X(35)" |  |
+| PkgDesc2 | character | 390 | ? | "X(35)" |  |
+| PkgDesc3 | character | 400 | ? | "X(35)" |  |
+| PrintLabel | logical | 410 | ? | "y/n" |  |
+| TraySize | character | 420 | ? | "X(6)" |  |
+| HeadHeight | integer | 430 | ? | "9" | 1=highest |
+| LabelPosition | integer | 440 | ? | "9" | 1 - 6: area of pkg on which to print |
+| TrayLineSpeed | integer | 450 | ? | ">9" |  |
+| BarCodeType | integer | 460 | ? | "9" |  |
+| PkgDateFormat | character | 470 | ? | "X(2)" |  |
+| BarCodePositionID | character | 480 | ? | "X(2)" |  |
+| PrintPackDate | logical | 490 | ? | "y/n" |  |
+| MarkDownMode | integer | 510 | ? | "9" |  |
+| MarkDownPrice | decimal | 520 | ? | ">>,>>9.999" |  |
+| TrayMinWgt | decimal | 530 | ? | ">>,>>9.999" |  |
+| TrayMaxWgt | decimal | 540 | ? | ">>,>>9.999" |  |
+| LiverCupRequested | logical | 550 | ? | "y/n" |  |
+| SalesMode | integer | 570 | ? | "9" |  |
+| AddMsg1 | character | 580 | ? | "x(30)" |  |
+| AddMsg2 | character | 590 | ? | "x(30)" |  |
+| AddMsg3 | character | 600 | ? | "x(30)" |  |
+| PrintCaseLabel | logical | 610 | ? | "y/n" |  |
+| ProdDesc1 | character | 620 | ? | "x(35)" |  |
+| ProdDesc2 | character | 630 | ? | "x(35)" |  |
+| LabelFormat | integer | 640 | ? | "9" |  |
+| MinWgt | decimal | 660 | ? | ">>,>>9.999" |  |
+| MaxWgt | decimal | 670 | ? | ">>,>>9.999" |  |
+| PrivateLabel | character | 690 | ? | "X(15)" |  |
+| PkgStdWgt | decimal | 700 | ? | ">>,>>9.999" |  |
+| WgtUnits | character | 710 | ? | "x(3)" |  |
+| ZeroLimit | decimal | 720 | ? | ">>,>>9.999" |  |
+| StdWgt | decimal | 730 | ? | ">>,>>9.999" |  |
+| DateDesc | character | 740 | ? | "X(14)" |  |
+| PrintUSDABadge | logical | 750 | ? | "y/n" |  |
+| PrintUSDAShield | logical | 760 | ? | "y/n" |  |
+| MfgID | character | 770 | ? | "x(12)" |  |
+| DateAI | character | 780 | ? | "x(4)" |  |
+| PackDateFormat | character | 790 | ? | "x(2)" |  |
+| SellByDesc | character | 800 | ? | "x(26)" |  |
+| PackDateDesc | character | 810 | ? | "x(26)" |  |
+| InkJetDesc1 | character | 820 | ? | "x(20)" |  |
+| InkJetDesc2 | character | 830 | ? | "x(20)" |  |
+| DolliesRequired | integer | 840 | ? | ">,>>>,>>9" |  |
+| AgeCodeColor | character | 850 | ? | "x(5)" |  |
+| TareType | character | 860 | ? | "x(4)" |  |
+| PalletCluster | integer | 870 | ? | ">9" |  |
+| WetTareWgt | decimal | 890 | ? | ">>,>>9.999" |  |
+| WetTarePct | decimal | 900 | ? | ">>,>>9.999" |  |
+| CustomerCode | integer | 910 | ? | ">>,>>9" |  |
+| BoxTare | decimal | 920 | ? | ">>,>>9.999" |  |
+| PrintExtraMessage | logical | 930 | ? | "y/n" |  |
+| PrintPkgSellBy | logical | 940 | ? | "y/n" |  |
+| PrintCaseSellBy | logical | 950 | ? | "y/n" |  |
+| DateCode | integer | 960 | ? | ">>9" |  |
+| PalletClusterSequence | integer | 970 | ? | ">9" |  |
+| PriceClubWithDiscount | character | 980 | ? | "x(30)" |  |
+| PriceClubWithoutDiscount | character | 990 | ? | "X(30)" |  |
+| MarkDownMethod | character | 1000 | ? | "x" |  |
+| CasesPerPallet | integer | 1010 | ? | ">>,>>9" |  |
+| CoolerProductCode | integer | 1020 | ? | "99999" |  |
+| PalletizerLane | integer | 1030 | ? | "99" |  |
+| LabelFile | character | 1040 | ? | "X(8)" |  |
+| WetTareType | character | 1050 | ? | "X(2)" | 'P'=pct,'W'=wgt,'N'=none |
+| DateAIDate | character | 1060 | ? | "x(20)" |  |
+| ExactCasesPerPalletRequired | logical | 1070 | ? | "yes/no" |  |
+| ExactItemsPerCaseRequired | logical | 1080 | ? | "yes/no" |  |
+| MaxLabelWgt | decimal | 1090 | ? | ">>,>>9.999" |  |
+| MinLabelWgt | decimal | 1100 | ? | ">>,>>9.999" |  |
+| Offset2 | integer | 1110 | ? | ">>9" |  |
+| PackType | character | 1120 | ? | "x" |  |
+| PostTare | decimal | 1130 | ? | ">>,>>9.999" |  |
+| SellByFormat | character | 1140 | ? | "x" |  |
+| SellByOffset | integer | 1150 | ? | ">>9" |  |
+| CaseText | character | 1160 | ? | "X(64)" |  |
+| VarFormat | character | 1170 | ? | "x" |  |
+| VarOffset | integer | 1180 | ? | ">>9" |  |
+| WgtRoundDigit | integer | 1190 | ? | "9" |  |
+| ShortDesc1 | character | 1210 | ? | "X(8)" |  |
+| ShortDesc2 | character | 1220 | ? | "X(8)" |  |
+| ShortDesc3 | character | 1230 | ? | "X(8)" |  |
+| TgtCompTime | character | 1240 | ? | "X(5)" |  |
+| WgtRoundOrTruncate | character | 1250 | ? | "X" |  |
+| PkgLabelFile | character | 1260 | ? | "X(8)" |  |
+| PkgMaxLabelWgt | decimal | 1270 | ? | ">>,>>9.999" |  |
+| PkgMinLabelWgt | decimal | 1280 | ? | ">>,>>9.999" |  |
+| PkgPackType | character | 1290 | ? | "x" |  |
+| PkgPostTare | decimal | 1300 | ? | ">>,>>9.999" |  |
+| PkgWetTarePct | decimal | 1310 | ? | ">>9.99" |  |
+| PkgWetTareWgt | decimal | 1320 | ? | ">>9.99" |  |
+| PkgWetTareType | character | 1330 | ? | "X(2)" |  |
+| PkgWgtRoundOrTruncate | character | 1340 | ? | "X(1)" |  |
+| PackDateOffset | integer | 1350 | ? | ">>9" |  |
+| PkgVarOffset | integer | 1360 | "0" | ">>9" |  |
+| PkgVarFormat | character | 1370 | "" | "X" |  |
+| SentToWPLDate | date | 1380 | ? | "99/99/99" |  |
+| SentToWPLTime | character | 1390 | "" | "X(8)" | HH:MM:ss |
+| SentToWPL | logical | 1400 | "no" | "yes/no" |  |
+| WO_Number | integer | 1410 | "0" | ">>>>>9" |  |
+
+#### Indexes
+| Index | Primary | Unique | Fields |
+|---|---|---|---|
+| GoalID | yes | no | GoalID ASCENDING |
+| GoalStatus | no | yes | GoalStatus ASCENDING, GoalID ASCENDING |
+| Priority | no | yes | GoalStatus ASCENDING, Priority ASCENDING, ProdCode ASCENDING, GoalID ASCENDING |
+| ProdCode | no | no | ProdCode ASCENDING |
+| TgtDateTimeGoal | no | no | TgtCompDate ASCENDING, TgtCompTime ASCENDING, GoalID ASCENDING |
+
+### Item
+
+- Dump name: Item
+- Sources: slc.df
+
+#### Fields
+| Field | Type | Order | Initial | Format | Description |
+|---|---|---:|---|---|---|
+| ExtraTareType | character |  | "N" | "X(1)" | Additional tare type: N=None,W=Weight,P=Percent |
+| ItemCode | integer |  | "0" | "99999" | Item Code in the range 00001-99999. |
+| MaxWgt | decimal |  | "0.00" | ">>>9.99" | Maximum weight to allow printing a label. |
+| MinLabelWgt | decimal |  |  |  | Used with PackType of 'V', for Variance; initially for Conagra; Used to calc Label Wgt: if wgt < MinLblWgt, |
+| MinWgt | decimal |  | "0.00" | ">>>9.99" | Minimum weight to allow printing a label. |
+| PackType | character |  | "C" | "X(1)" | Package Weight Type: C=Catch, U=Unipak, F=Fixed, K=Key-in, V=Variance |
+| SellByFormat | character |  |  |  | Sell by date print and display format |
+| WgtRoundOrTruncate | character |  | "R" | "X(1)" | Should we round or truncate weights |
+| WgtUnits | character |  | "LB" | "X(2)" | Weight Unit type: LB or KG |
+| Desc1 | character | 20 | "" | "X(32)" |  |
+| Desc2 | character | 30 | "" | "X(32)" |  |
+| ShortDesc1 | character | 40 | "" | "X(8)" |  |
+| ShortDesc2 | character | 50 | "" | "X(8)" |  |
+| ShortDesc3 | character | 60 | "" | "X(8)" |  |
+| StdWgt | decimal | 90 | "0.00" | ">>>9.99" | Standard weight to print for fixed and unipak Item. |
+| WgtRoundDigit | integer | 130 | "1" | "9" |  |
+| LabelFile | character | 140 | "Demo" | "X(8)" | Label file name |
+| ItemDateFormat | character | 150 | "O" | "X(1)" |  |
+| SellByOffset | integer | 160 | "0" | "->>9" | Number of days from the kill date to offset the sell by date |
+| TareWgt | decimal | 190 | "0" | ">,>>9.99" | Tare value of packaging |
+| WgtTare1 | decimal | 210 | "0" | ">,>>9.999" | Weight tare value to be added to box tare value |
+| WgtTare2 | decimal | 220 | "0" | ">,>>9.999" | Weight tare value to be added to box tare value |
+| WgtTare3 | decimal | 230 | "0" | ">,>>9.999" | Weight tare value to be added to box tare value |
+| WgtTare4 | decimal | 240 | "0" | ">,>>9.999" | Weight tare value to be added to box tare value |
+| WgtTare5 | decimal | 250 | "0" | ">,>>9.999" | Weight tare value to be added to box tare value |
+| WgtTare6 | decimal | 260 | "0" | ">,>>9.999" | Weight tare value to be added to box tare value |
+| WgtTare7 | decimal | 270 | "0" | ">,>>9.999" | Weight tare value to be added to box tare value |
+| WgtTare8 | decimal | 280 | "0" | ">,>>9.999" | Weight tare value to be added to box tare value |
+| PercentTare1 | decimal | 290 | "0" | ">,>>9.99" | Percentage tare value to be added to box tare value |
+| PercentTare2 | decimal | 300 | "0" | ">,>>9.99" | Percentage tare value to be added to box tare value |
+| PercentTare3 | decimal | 310 | "0" | ">,>>9.99" | Percentage tare value to be added to box tare value |
+| PercentTare4 | decimal | 320 | "0" | ">,>>9.99" | Percentage tare value to be added to box tare value |
+| PercentTare5 | decimal | 330 | "0" | ">,>>9.99" | Percentage tare value to be added to box tare value |
+| PercentTare6 | decimal | 340 | "0" | ">,>>9.99" | Percentage tare value to be added to box tare value |
+| PercentTare7 | decimal | 350 | "0" | ">,>>9.99" | Percentage tare value to be added to box tare value |
+| PercentTare8 | decimal | 360 | "0" | ">,>>9.99" | Percentage tare value to be added to box tare value |
+| Text1 | character | 370 | "" | "X(64)" | Text field 1 |
+| Text2 | character | 380 | "" | "X(64)" | Text field 2 |
+| Text3 | character | 390 | "" | "X(64)" | Text field 3 |
+| Text4 | character | 400 | "" | "X(64)" | Text field 4 |
+| Text5 | character | 410 | "" | "X(64)" | Text field 5 |
+| Text6 | character | 420 | "" | "X(64)" | Text field 6 |
+| Text7 | character | 430 | "" | "X(64)" | Text field 7 |
+| Text8 | character | 440 | "" | "X(64)" | Text field 8 |
+| Text9 | character | 450 | "" | "X(64)" | Text field 9 |
+| Text10 | character | 460 | "" | "X(64)" | Text field 10 |
+| MaxLabelWgt | decimal | 540 | "0" | ">>>9.99" | Used with PackType of 'V', for Variance; initially for Conagra; Used to calc Label Wgt: if wgt > MaxLblWgt, label wgt = MaxLblWgt. (still can't exceed Max Wgt)   |
+| PostTare | decimal | 570 | "0" | ">,>>9.999" | Usually Ice or Packing material |
+| ExactItemsPerCaseRequired | logical | 580 | "no" | "yes/no" |  |
+| DateAI | character | 590 | "" | "xxxx" | UCC Std for barcodes - date AI |
+| DateAIDate | character | 600 | "" | "x(20)" | Date to be used in conjunction with DateAI |
+| Offset2 | integer | 610 | "0" | "->,>>>,>>9" | 2nd offset to be used with AI dates for barcoding |
+| ProdDateFormat | character | 620 | "O" | "X(1)" |  |
+| VarFormat | character | 630 | "" | "X" |  |
+| VarOffset | integer | 640 | "0" | ">>9" |  |
+
+#### Indexes
+| Index | Primary | Unique | Fields |
+|---|---|---|---|
+| item | yes | yes | ItemCode ASCENDING |
+
+### ItemModify
+
+- Description: Data that can be changed by Item code in the modify screen. The current values are saved by item code.
+- Dump name: ItemModi
+- Sources: slc.df
+
+#### Fields
+| Field | Type | Order | Initial | Format | Description |
+|---|---|---:|---|---|---|
+| ItemCode | integer | 10 | "0" | "99999" | Item Code in the range 00001-99999. |
+| TareToUse | integer | 20 | "1" | "99" | The tare number to use when Item.extrataretype <> 'n' (none) |
+| PackDateOffset | integer | 30 | "0" | "-999" | Offset of the Pack Date.  Use for runs which go over midnight, so the whole run has the same pack date. |
+| KillDateOffset | integer | 40 | "0" | "-999" | Offset of the Kill Date. |
+| VarOffset | integer | 50 | "0" | "-999" | Variable offset from today used for various dates. |
+| Price | decimal | 60 | "0" | ">>,>>9.9999" |  |
+| Lot | character | 70 | "" | "X(10)" | Lot number can be alpha-numeric. |
+| ModText1 | character | 80 | "" | "X(20)" | Variable text field |
+| ModText2 | character | 90 | "" | "X(20)" | Variable text field |
+| CustName | character | 110 | "" | "x(20)" |  |
+| OrdNum | character | 120 | "" | "x(20)" |  |
+| PdnOrdLineNum | integer | 130 | "0" | ">>>9" |  |
+
+#### Indexes
+| Index | Primary | Unique | Fields |
+|---|---|---|---|
+| ItemModify | yes | yes | ItemCode ASCENDING |
+
+### ItemSerial
+
+- Dump name: ItemSeri
+- Sources: slc.df
+
+#### Fields
+| Field | Type | Order | Initial | Format | Description |
+|---|---|---:|---|---|---|
+| AddOrDel | character |  | "" | "X(1)" | Are we adding or deleting/cancelling this item |
+| ProductCode | integer |  | "0" | "99999" | Product Code in the range 00001-99999. |
+| ScaleNumber | integer |  | "0" | "99" | Scale where box label was printed. |
+| Shift | integer |  | "1" | "99" | Shift box was produced on. |
+| WgtUnits | character |  | "LB" | "X(2)" | Weight Unit type: LB or KG |
+| SerialNum | character | 10 | "" | "X(20)" |  |
+| PrintDate | date | 30 | ? | "99/99/9999" | Date the label was printed. |
+| PrintTime | integer | 40 | "0" | ">>>>>>9" |  |
+| PackDate | date | 50 | ? | "99/99/9999" | When was box packed/produced. |
+| KillDate | date | 60 | ? | "99/99/9999" | When was product in this box actually killed. |
+| Operator | character | 80 | "" | "X(10)" | Current user when box label was printed. |
+| SellByOffset | integer | 110 | "0" | "->>9" | Number of days from the kill date to offset the sell by date |
+| VarOffset | integer | 120 | "0" | "->>9" | Variable offset from today |
+| LabelWgt | decimal | 140 | "0" | ">,>>9.999" |  |
+| NetWgt | decimal | 150 | "0" | ">,>>9.999" |  |
+| ExtraTareWgt | decimal | 170 | "0" | ">,>>9.999" | Extra tare value in addition to pre tare; usually moisture tare. |
+| ItemCode | integer | 180 | "0" | "99999" | Item Code |
+| Lot | character | 190 | "000" | "X(10)" | Lot number can be alpha-numeric. |
+| UserBarString | character | 210 | "" | "X(32)" | Actual string printed for user defined barcode. |
+| Price | decimal | 220 | "0" | ">>,>>9.9999" |  |
+| CustomerName | character | 230 | "" | "X(20)" | Customer name |
+| Order | character | 240 | "" | "X(20)" | Customer order number |
+| Sent | logical | 250 | "no" | "yes/no" |  |
+| GoalID | integer | 260 | "0" | "->>>>>>9" |  |
+| ItemPostTareWgt | decimal | 290 | "0" | ">,>>9.999" |  |
+| TotalTareWgt | decimal | 310 | "0" | ">>,>>9.999" |  |
+| ItemPreTareWgt | decimal | 320 | "0" | ">>,>>9.999" |  |
+| CaseSerialNum | character | 340 | "" | "X(12)" |  |
+| PdnOrdNum | character | 350 | "" | "X(10)" |  |
+| PdnOrdLineNum | integer | 360 | "0" | ">>>9" |  |
+
+#### Indexes
+| Index | Primary | Unique | Fields |
+|---|---|---|---|
+| CaseSerialNum | no | no | CaseSerialNum ASCENDING, PrintDate ASCENDING, PrintTime ASCENDING |
+| Goal | no | no | GoalID ASCENDING, PrintDate ASCENDING, PrintTime ASCENDING |
+| ItemSerial | yes | yes | SerialNum ASCENDING, AddOrDel ASCENDING |
+| PackDate | no | no | PackDate ASCENDING, PrintDate ASCENDING, PrintTime ASCENDING |
+| PrintDateTime | no | no | PrintDate ASCENDING, PrintTime ASCENDING |
+| ProductCode | no | no | ProductCode ASCENDING, PrintDate ASCENDING, PrintTime ASCENDING |
+| Sent | no | no | Sent ASCENDING, PrintDate ASCENDING, PackDate ASCENDING |
+| Shift | no | no | PrintDate ASCENDING, PrintTime ASCENDING, Shift ASCENDING |
+
+### Locals
+
+- Dump name: locals
+- Sources: slc.df
+
+#### Fields
+| Field | Type | Order | Initial | Format | Description |
+|---|---|---:|---|---|---|
+| LocalCode | integer |  | "0" | "9999" | Local code number |
+| ProductCode | integer |  | "0" | "99999" | Product Code in the range 00001-99999. |
+| PageNbr | integer | 30 | "0" | "999" | Locals Page Number |
+| pageheader | character | 50 | "" | "X(40)" |  |
+
+#### Indexes
+| Index | Primary | Unique | Fields |
+|---|---|---|---|
+| lc | yes | yes | LocalCode ASCENDING, PageNbr ASCENDING |
+| PageNumber | no | no | PageNbr ASCENDING, LocalCode ASCENDING |
+
+### MailID
+
+- Dump name: mailid
+- Sources: slc.df
+
+#### Fields
+| Field | Type | Order | Initial | Format | Description |
+|---|---|---:|---|---|---|
+| EmployeeName | character | 10 | "" | "X(30)" |  |
+| EMailID | character | 20 | "" | "X(40)" |  |
+| CommSysID | character | 30 | "" | "X(25)" |  |
+| Descr | character | 40 | "" | "X(25)" |  |
+| EmployeeID | character | 50 | "" | "X(9)" |  |
+
+#### Indexes
+| Index | Primary | Unique | Fields |
+|---|---|---|---|
+| CommSysID | no | no | CommSysID ASCENDING |
+| Descr | no | no | Descr ASCENDING |
+| Email | no | no | EMailID ASCENDING |
+| EmplNameID | yes | yes | EmployeeName ASCENDING, EmployeeID ASCENDING |
+
+### MfgOrd
+
+- Dump name: mfgord
+- Sources: data/MfgOrd.df, data/delta-mfgordnum.df
+
+#### Fields
+| Field | Type | Order | Initial | Format | Description |
+|---|---|---:|---|---|---|
+| MfgOrdDate | date | 10 | ? | "99/99/99" |  |
+| MfgOrdNum | int64 | 20 | "0" | ">>>>>>>>>9" |  |
+| ProdCode | integer | 30 | "0" | ">>>>9" |  |
+| MfgOrdStatus | character | 40 | "" | "x(10)" |  |
+
+#### Indexes
+- None found
+
+### Modify
+
+- Description: Data that can be changed by product code in the modify screen. The current values are saved by product code.  In the future, the key to this table will be Product / Customer / Order
+- Dump name: modify
+- Sources: slc.df
+
+#### Fields
+| Field | Type | Order | Initial | Format | Description |
+|---|---|---:|---|---|---|
+| ProductCode | integer |  | "0" | "99999" | Product Code in the range 00001-99999. |
+| TareToUse | integer | 20 | "1" | "99" | The tare number to use when product.extrataretype <> 'n' (none) |
+| PackDateOffset | integer | 30 | "0" | "-999" | Offset of the Pack Date.  Use for runs which go over midnight, so the whole run has the same pack date. |
+| KillDateOffset | integer | 40 | "0" | "-999" | Offset of the Kill Date. |
+| VarOffset | integer | 50 | "0" | "-999" | Variable offset from today used for various dates. |
+| Price | decimal | 60 | "0" | ">>,>>9.9999" |  |
+| Lot | character | 70 | "" | "X(10)" | Lot number can be alpha-numeric. |
+| ModText1 | character | 80 | "" | "X(20)" | Variable text field |
+| ModText2 | character | 90 | "" | "X(20)" | Variable text field |
+| CustName | character | 110 | "" | "x(20)" |  |
+| OrdNum | character | 120 | "" | "x(20)" |  |
+| CasesPerPallet | integer | 130 | "0" | "->,>>>,>>9" |  |
+| PalletNum | character | 140 | "" | "x(10)" | PlantID (99) + YDDD + 9999 sequence |
+| PalletTracking | logical | 150 | "no" | "yes/no" |  |
+| PdnOrdLineNum | integer | 160 | "0" | ">>>9" |  |
+
+#### Indexes
+| Index | Primary | Unique | Fields |
+|---|---|---|---|
+| Modify | yes | yes | ProductCode ASCENDING |
+
+### Msg
+
+- Dump name: msg
+- Sources: slc.df
+
+#### Fields
+| Field | Type | Order | Initial | Format | Description |
+|---|---|---:|---|---|---|
+| LangCode | character | 10 | "" | "x(10)" |  |
+| MsgId | character | 20 | "" | "x(30)" |  |
+| Msg | character | 30 | "" | "x(256)" |  |
+| MsgLen | integer | 40 | "0" | "->,>>>,>>9" |  |
+
+#### Indexes
+| Index | Primary | Unique | Fields |
+|---|---|---|---|
+| Msg | yes | yes | LangCode ASCENDING, MsgId ASCENDING |
+
+### Operator
+
+- Description: Contains User info; names, logins, passwords, etc.
+- Dump name: operator
+- Sources: slc.df
+
+#### Fields
+| Field | Type | Order | Initial | Format | Description |
+|---|---|---:|---|---|---|
+| Operator | character | 10 | "" | "X(10)" | Login name. |
+| Password | character | 20 | "" | "X(10)" | Password for user login |
+| FirstName | character | 40 | "" | "X(20)" | First Name |
+| LastName | character | 50 | "" | "X(20)" | Last Name |
+| LangCode | character | 60 | "" | "x(10)" |  |
+
+#### Indexes
+| Index | Primary | Unique | Fields |
+|---|---|---|---|
+| Oper | yes | yes | Operator ASCENDING |
+
+### OperatorAppFunction
+
+- Description: Operator : AppFunction is many:many
+- Dump name: operAppF
+- Sources: slc.df
+
+#### Fields
+| Field | Type | Order | Initial | Format | Description |
+|---|---|---:|---|---|---|
+| Operator | character | 10 | "" | "x(10)" | Operator from Operator Table |
+| ID | character | 20 | "" | "x(50)" | ID from AppFunction |
+| Permitted | logical | 30 | "no" | "yes/no" | Operator is permitted to perform AppFunction |
+
+#### Indexes
+| Index | Primary | Unique | Fields |
+|---|---|---|---|
+| ID-Operator | no | yes | ID ASCENDING, Operator ASCENDING |
+| OperatorID | yes | yes | Operator ASCENDING, ID ASCENDING |
+
+### PalletDtl
+
+- Dump name: palletdt
+- Sources: slc.df
+
+#### Fields
+| Field | Type | Order | Initial | Format | Description |
+|---|---|---:|---|---|---|
+| PalletNum | character | 10 | "" | "X(10)" | PlantID (99) + YDDD + 9999 sequence |
+| SerialNum | character | 20 | "" | "X(12)" |  |
+| ProductCode | integer | 30 | "0" | "99999" |  |
+| LabelWgt | decimal | 40 | "0" | "->>,>>9.999" |  |
+| NetWgt | decimal | 50 | "0" | "->>,>>9.999" |  |
+
+#### Indexes
+| Index | Primary | Unique | Fields |
+|---|---|---|---|
+| PalletSerial | yes | yes | PalletNum ASCENDING, SerialNum ASCENDING |
+| Serial | no | no | SerialNum ASCENDING |
+
+### PalletHdr
+
+- Dump name: pallethd
+- Sources: slc.df
+
+#### Fields
+| Field | Type | Order | Initial | Format | Description |
+|---|---|---:|---|---|---|
+| CaseCount | integer | 10 | "0" | "->,>>>,>>9" |  |
+| PalletNum | character | 20 | "" | "X(10)" | PlantID (99) + YDDD + 9999 sequence |
+| Complete | logical | 30 | "no" | "yes/no" |  |
+| DateComplete | date | 40 | ? | "99/99/99" |  |
+| TimeComplete | character | 50 | "" | "X(8)" |  |
+| Sent | logical | 60 | "no" | "yes/no" |  |
+| DateSent | date | 70 | ? | "99/99/99" |  |
+| TimeSent | character | 80 | "" | "X(8)" |  |
+
+#### Indexes
+| Index | Primary | Unique | Fields |
+|---|---|---|---|
+| PalletNum | yes | yes | PalletNum ASCENDING |
+
+### Product
+
+- Description: Product Code Definitions
+- Dump name: product
+- Sources: data/delta-product-hybrid.df, slc.df
+
+#### Fields
+| Field | Type | Order | Initial | Format | Description |
+|---|---|---:|---|---|---|
+| ExtraTareType | character |  | "N" | "X(1)" | Additional tare type: N=None,W=Weight,P=Percent |
+| MaxWgt | decimal |  | "0.00" | ">>>9.999" | Maximum weight to allow printing a label. |
+| MinLabelWgt | decimal |  |  |  | Used with PackType of 'V', for Variance; initially for Conagra; Used to calc Label Wgt: if wgt < MinLblWgt, |
+| MinWgt | decimal |  | "0.00" | ">>>9.999" | Minimum weight to allow printing a label. |
+| PackType | character |  | "C" | "X(1)" | Pack Type: C=Catch, U=Unipak, F=Fixed, K=Key-in, V=Variance, H=Hybrid |
+| ProductCode | integer |  | "0" | "99999" | Product Code in the range 00001-99999. |
+| SellByFormat | character |  |  |  | Sell by date print and display format |
+| VarFormat | character |  |  |  |  |
+| WgtRoundOrTruncate | character |  | "R" | "X(1)" | Should we round or truncate weights |
+| WgtUnits | character |  | "LB" | "X(2)" | Weight Unit type: LB or KG |
+| Desc1 | character | 20 | "" | "X(32)" |  |
+| Desc2 | character | 30 | "" | "X(32)" |  |
+| ShortDesc1 | character | 40 | "" | "X(8)" |  |
+| ShortDesc2 | character | 50 | "" | "X(8)" |  |
+| ShortDesc3 | character | 60 | "" | "X(8)" |  |
+| StdWgt | decimal | 90 | "0.00" | ">>>9.999" | Standard weight to print for fixed and unipak product. |
+| WgtRoundDigit | integer | 130 | "1" | "9" |  |
+| LabelFile | character | 140 | "Demo" | "X(8)" | Label file name |
+| ProdDateFormat | character | 150 | "O" | "X(1)" |  |
+| SellByOffset | integer | 160 | "0" | "->>9" | Number of days from the kill date to offset the sell by date |
+| BoxTare | decimal | 190 | "0" | ">,>>9.999" | Tare value of packaging |
+| WgtTare1 | decimal | 210 | "0" | ">,>>9.999" | Weight tare value to be added to box tare value |
+| WgtTare2 | decimal | 220 | "0" | ">,>>9.999" | Weight tare value to be added to box tare value |
+| WgtTare3 | decimal | 230 | "0" | ">,>>9.999" | Weight tare value to be added to box tare value |
+| WgtTare4 | decimal | 240 | "0" | ">,>>9.999" | Weight tare value to be added to box tare value |
+| WgtTare5 | decimal | 250 | "0" | ">,>>9.999" | Weight tare value to be added to box tare value |
+| WgtTare6 | decimal | 260 | "0" | ">,>>9.999" | Weight tare value to be added to box tare value |
+| WgtTare7 | decimal | 270 | "0" | ">,>>9.999" | Weight tare value to be added to box tare value |
+| WgtTare8 | decimal | 280 | "0" | ">,>>9.999" | Weight tare value to be added to box tare value |
+| PercentTare1 | decimal | 290 | "0" | ">,>>9.99" | Percentage tare value to be added to box tare value |
+| PercentTare2 | decimal | 300 | "0" | ">,>>9.99" | Percentage tare value to be added to box tare value |
+| PercentTare3 | decimal | 310 | "0" | ">,>>9.99" | Percentage tare value to be added to box tare value |
+| PercentTare4 | decimal | 320 | "0" | ">,>>9.99" | Percentage tare value to be added to box tare value |
+| PercentTare5 | decimal | 330 | "0" | ">,>>9.99" | Percentage tare value to be added to box tare value |
+| PercentTare6 | decimal | 340 | "0" | ">,>>9.99" | Percentage tare value to be added to box tare value |
+| PercentTare7 | decimal | 350 | "0" | ">,>>9.99" | Percentage tare value to be added to box tare value |
+| PercentTare8 | decimal | 360 | "0" | ">,>>9.99" | Percentage tare value to be added to box tare value |
+| Text1 | character | 370 | "" | "X(64)" | Text field 1 |
+| Text2 | character | 380 | "" | "X(64)" | Text field 2 |
+| Text3 | character | 390 | "" | "X(64)" | Text field 3 |
+| Text4 | character | 400 | "" | "X(64)" | Text field 4 |
+| Text5 | character | 410 | "" | "X(64)" | Text field 5 |
+| Text6 | character | 420 | "" | "X(64)" | Text field 6 |
+| Text7 | character | 430 | "" | "X(64)" | Text field 7 |
+| Text8 | character | 440 | "" | "X(64)" | Text field 8 |
+| Text9 | character | 450 | "" | "X(64)" | Text field 9 |
+| Text10 | character | 460 | "" | "X(64)" | Text field 10 |
+| VarOffset | integer | 480 | "0" | "->>9" |  |
+| DateAIDate | character | 510 | "" | "x(20)" | Date to be used in conjunction with DateAI |
+| DateAI | character | 520 | "" | "xxxx" | UCC Std for barcodes - date AI |
+| Offset2 | integer | 530 | "0" | "->,>>>,>>9" | 2nd offset to be used with AI dates for barcoding |
+| MaxLabelWgt | decimal | 540 | "0" | ">>>9.999" | Used with PackType of 'V', for Variance; initially for Conagra; Used to calc Label Wgt: if wgt > MaxLblWgt, label wgt = MaxLblWgt. (still can't exceed Max Wgt)   |
+| PostTare | decimal | 570 | "0" | ">,>>9.999" | Usually Ice or Packing material |
+| ExactItemsPerCaseRequired | logical | 580 | "no" | "yes/no" |  |
+| ExactCasesPerPalletRequired | logical | 590 | "no" | "yes/no" |  |
+| CasesPerPallet | integer | 600 | "0" | "->,>>>,>>9" |  |
+
+#### Indexes
+| Index | Primary | Unique | Fields |
+|---|---|---|---|
+| prod | yes | yes | ProductCode ASCENDING |
+
+### ProductProcess
+
+- Description: Resolution of N:N Products and Valid Processes
+- Dump name: productp
+- Sources: slc.df
+
+#### Fields
+| Field | Type | Order | Initial | Format | Description |
+|---|---|---:|---|---|---|
+| ProductCode | integer |  | "0" | "99999" | Product Code in the range 00001-99999. |
+| ProcessSequence | integer | 20 | "0" | "->,>>>,>>9" |  |
+| ProcessID | character | 30 | "" | "X(20)" |  |
+| GroupID | character | 40 | "" | "x(20)" |  |
+| ButtonLabel | character | 50 | "" | "x(20)" | .LBL assumed |
+| ButtonImage | character | 60 | "" | "x(10)" | .bmp assumed |
+| InputProcess | logical | 70 | "no" | "yes/no" | Groups have value of '?' |
+| Device | character | 80 | "" | "x(15)" |  |
+| AlternateDevice | character | 90 | "" | "x(15)" |  |
+| Repetitions | integer | 100 | "0" | ">,>>>,>>9" |  |
+| ResetRequired | logical | 110 | "no" | "yes/no" |  |
+| ResetWgt | decimal | 120 | "0" | "->>,>>9.99" |  |
+| Routine | character | 130 | "" | "x(15)" | Input Capture, or Output Formatting |
+| SetupRoutine | character | 140 | "" | "x(15)" | Input Setup |
+| OutputLabel | character | 150 | "" | "x(15)" | .lbl assumed |
+| EscapeButtonLabel | character | 160 | "" | "x(15)" |  |
+| Description | character | 170 | "" | "x(20)" |  |
+| Item | integer | 180 | "0" | "99999" | Product can have items |
+| AccumForPrior | logical | 190 | "no" | "yes/no" | Sum Total Tare + Prod Wgt for Prior Wgt because have combined all scale wgts back onto this one. |
+| WgtType | character | 200 | "" | "X(8)" | Tare/Case/Item |
+
+#### Indexes
+| Index | Primary | Unique | Fields |
+|---|---|---|---|
+| Product-seq | yes | yes | ProductCode ASCENDING, ProcessSequence ASCENDING |
+
+### Serial
+
+- Dump name: serial
+- Sources: data/Serial-MfgOrdNum.df, data/Serial-PDNBatchID.df, data/delta-mfgordnum.df, slc.df
+
+#### Fields
+| Field | Type | Order | Initial | Format | Description |
+|---|---|---:|---|---|---|
+| AddOrDel | character |  | "" | "X(1)" | Are we adding or deleting/cancelling this box. |
+| ProductCode | integer |  | "0" | "99999" | Product Code in the range 00001-99999. |
+| ScaleNumber | integer |  | "0" | "99" | Scale where box label was printed. |
+| Shift | integer |  | "1" | "99" | Shift box was produced on. |
+| WgtUnits | character |  | "LB" | "X(2)" | Weight Unit type: LB or KG |
+| SerialNum | character | 10 | "" | "X(12)" |  |
+| PrintDate | date | 30 | ? | "99/99/9999" | Date the label was printed. |
+| PrintTime | integer | 40 | "0" | ">>>>>>9" |  |
+| PackDate | date | 50 | ? | "99/99/9999" | When was box packed/produced. |
+| KillDate | date | 60 | ? | "99/99/9999" | When was product in this box actually killed. |
+| Operator | character | 80 | "" | "X(10)" | Current user when box label was printed. |
+| SellByOffset | integer | 110 | "0" | "->>9" | Number of days from the kill date to offset the sell by date |
+| VarOffset | integer | 120 | "0" | "->>9" | Variable offset from today |
+| LabelWgt | decimal | 140 | "0" | ">,>>9.999" |  |
+| NetWgt | decimal | 150 | "0" | ">,>>9.999" |  |
+| BoxTare | decimal | 160 | "0" | ">,>>9.999" | Tare value of packaging |
+| ExtraTare | decimal | 170 | "0" | ">,>>9.999" | Extra tare value in addition to box tare; usually moisture tare. |
+| Lot | character | 190 | "000" | "X(10)" | Lot number can be alpha-numeric. |
+| UserBarString | character | 210 | "" | "X(32)" | Actual string printed for user defined barcode. |
+| Price | decimal | 220 | "0" | ">>,>>9.9999" |  |
+| CustomerName | character | 230 | "" | "X(20)" | Customer name |
+| Order | character | 240 | "" | "X(20)" | Customer order number |
+| Sent | logical | 250 | "no" | "yes/no" |  |
+| GoalID | integer | 260 | "0" | "->>>>>>9" |  |
+| ContainerPreTareWgt | decimal | 270 | "0" | ">>,>>9.99" |  |
+| ItemWgtList | character | 280 | "" | "x(40)" | csv of all items  |
+| ItemPostTareWgt | decimal | 290 | "0" | ">,>>9.99" |  |
+| CasePostTareWgt | decimal | 300 | "0" | ">,>>9.99" |  |
+| TotalTareWgt | decimal | 310 | "0" | ">>,>>9.99" |  |
+| ItemPreTareWgt | decimal | 320 | "0" | ">>,>>9.99" |  |
+| PalletNum | character | 330 | "" | "X(10)" | PlantID (99) + YDDD + 9999 sequence |
+| PdnOrdNum | character | 340 | "" | "x(10)" |  |
+| Reprinted | logical | 350 | "no" | "yes/no" |  |
+| PdnOrdLineNum | integer | 360 | "0" | ">>>9" | Customer's Order Line Num via WO via Goals |
+| MfgOrdNum | int64 | 370 | "0" | ">>>>>>>>>9" |  |
+| ProducedAtVRT | logical | 380 | "no" | "yes/no" |  |
+| PDNBatchID | int64 | 390 | "0" | ">>>>>>>>>9" |  |
+
+#### Indexes
+| Index | Primary | Unique | Fields |
+|---|---|---|---|
+| Serial | yes | yes | SerialNum ASCENDING, AddOrDel ASCENDING |
+
+### SiteConfigOption
+
+- Description: This table contains the configuration option records implemented at this site/plant
+- Dump name: siteconf
+- Sources: slc.df
+
+#### Fields
+| Field | Type | Order | Initial | Format | Description |
+|---|---|---:|---|---|---|
+| OptionName | character | 20 | "" | "x(30)" | Config option name |
+| OptionValue | character | 40 | "" | "x(60)" |  |
+
+#### Indexes
+| Index | Primary | Unique | Fields |
+|---|---|---|---|
+| OptionID | yes | yes | OptionName ASCENDING |
+
+### Totals
+
+- Description: Production totals
+- Dump name: totals
+- Sources: slc.df
+
+#### Fields
+| Field | Type | Order | Initial | Format | Description |
+|---|---|---:|---|---|---|
+| ProductCode | integer |  | "0" | "99999" | Product Code in the range 00001-99999. |
+| Scale | integer |  | "0" | "99" | Scale where box label was printed. |
+| Shift | integer |  | "1" | "99" | Shift box was produced on. |
+| LocalCount | integer | 50 | "0" | ">>,>>9" | Local Production count |
+| LocalLabelWgt | decimal | 60 | "0" | ">>>,>>9.99" |  |
+| LocalNetWgt | decimal | 70 | "0" | ">>>,>>9.99" |  |
+| LocalTareWgt | decimal | 80 | "0" | ">>>,>>9.99" |  |
+| TotalCount | integer | 90 | "0" | ">>,>>9" | Total Production count |
+| TotalLabelWgt | decimal | 100 | "0" | ">>>,>>9.99" |  |
+| TotalNetWgt | decimal | 110 | "0" | ">>>,>>9.99" |  |
+| PdnDate | date | 130 | ? | "99/99/9999" |  |
+| LocalCancelCount | integer | 140 | "0" | ">>,>>9" | Local Production count |
+| LocalCancelLabelWgt | decimal | 150 | "0" | ">>>,>>9.99" |  |
+| LocalCancelNetWgt | decimal | 160 | "0" | "->>,>>9.99" |  |
+
+#### Indexes
+| Index | Primary | Unique | Fields |
+|---|---|---|---|
+| PdnDateScProductCode | no | no | PdnDate ASCENDING, Scale ASCENDING, ProductCode ASCENDING |
+| PdnDateScShProduct | no | yes | PdnDate ASCENDING, Scale ASCENDING, Shift ASCENDING, ProductCode ASCENDING |
+| ProdCode | no | no | ProductCode ASCENDING |
+| Shift | no | no | Shift ASCENDING |
+| ShiftScaleProdDate | yes | yes | Shift ASCENDING, Scale ASCENDING, ProductCode ASCENDING, PdnDate ASCENDING |
+
+### UBDetail
+
+- Dump name: ubdetail
+- Sources: slc.df
+
+#### Fields
+| Field | Type | Order | Initial | Format | Description |
+|---|---|---:|---|---|---|
+| UBName | character | 10 | "" | "X(8)" |  |
+| UBDispLoc | integer | 20 | "0" | ">>>>>>9" |  |
+| UBField | character | 30 | "" | "X(15)" |  |
+| UBFieldCharLoc | integer | 50 | "0" | ">>>>>>9" |  |
+| UBLength | integer | 60 | "0" | ">>>>>>9" |  |
+
+#### Indexes
+| Index | Primary | Unique | Fields |
+|---|---|---|---|
+| UBDetIdx | yes | yes | UBName ASCENDING, UBDispLoc ASCENDING |
+
+### UBExamples
+
+- Dump name: ubexampl
+- Sources: slc.df
+
+#### Fields
+| Field | Type | Order | Initial | Format | Description |
+|---|---|---:|---|---|---|
+| UBField | character | 10 | "" | "X(8)" |  |
+| UBExample | character | 20 | "" | "X(48)" |  |
+
+#### Indexes
+| Index | Primary | Unique | Fields |
+|---|---|---|---|
+| UBExampIdx | yes | yes | UBField ASCENDING |
+
+### UBHeader
+
+- Dump name: ubheader
+- Sources: slc.df
+
+#### Fields
+| Field | Type | Order | Initial | Format | Description |
+|---|---|---:|---|---|---|
+| UBName | character | 10 | "" | "X(20)" |  |
+| UBLength | integer | 20 | "0" | ">>>>>>9" |  |
+| UBAddDate | date | 30 | ? | "99/99/9999" |  |
+| UBAddOper | character | 40 | "" | "x(15)" |  |
+
+#### Indexes
+| Index | Primary | Unique | Fields |
+|---|---|---|---|
+| UBHIdx | yes | yes | UBName ASCENDING |
+
+### ValidProcess
+
+- Description: Input, Output, and 'Group'
+- Dump name: validpro
+- Sources: slc.df
+
+#### Fields
+| Field | Type | Order | Initial | Format | Description |
+|---|---|---:|---|---|---|
+| ProcessID | character | 10 | "" | "x(20)" |  |
+| Description | character | 20 | "" | "x(40)" |  |
+| DefaultProcess | character | 30 | "" | "x(15)" |  |
+
+#### Indexes
+| Index | Primary | Unique | Fields |
+|---|---|---|---|
+| ProcessID | yes | yes | ProcessID ASCENDING |
+

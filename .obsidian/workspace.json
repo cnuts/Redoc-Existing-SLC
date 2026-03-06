@@ -1,0 +1,272 @@
+{
+  "main": {
+    "id": "e2e34059ace474df",
+    "type": "split",
+    "children": [
+      {
+        "id": "1a699e9b73adf793",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "5adb37f217ced717",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "Edit Goals.md",
+                "mode": "source",
+                "source": false
+              },
+              "icon": "lucide-file",
+              "title": "Edit Goals"
+            }
+          },
+          {
+            "id": "d4cf46206b7bac71",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "Views/System/Edit Serials.md",
+                "mode": "source",
+                "source": false
+              },
+              "icon": "lucide-file",
+              "title": "Edit Serials"
+            }
+          },
+          {
+            "id": "e28b60df501a149a",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "Glossary.md",
+                "mode": "source",
+                "source": false
+              },
+              "icon": "lucide-file",
+              "title": "Glossary"
+            }
+          }
+        ],
+        "currentTab": 1
+      }
+    ],
+    "direction": "vertical"
+  },
+  "left": {
+    "id": "5010cffe9c572f5f",
+    "type": "split",
+    "children": [
+      {
+        "id": "c224db8259f108c0",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "6a38587a4c92c0bc",
+            "type": "leaf",
+            "state": {
+              "type": "file-explorer",
+              "state": {
+                "sortOrder": "alphabetical",
+                "autoReveal": false
+              },
+              "icon": "lucide-folder-closed",
+              "title": "Files"
+            }
+          },
+          {
+            "id": "18b850a06aceca5a",
+            "type": "leaf",
+            "state": {
+              "type": "search",
+              "state": {
+                "query": "set scale",
+                "matchingCase": false,
+                "explainSearch": false,
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical"
+              },
+              "icon": "lucide-search",
+              "title": "Search"
+            }
+          },
+          {
+            "id": "6b8e856ba56b4412",
+            "type": "leaf",
+            "state": {
+              "type": "bookmarks",
+              "state": {},
+              "icon": "lucide-bookmark",
+              "title": "Bookmarks"
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "horizontal",
+    "width": 300
+  },
+  "right": {
+    "id": "73cd9ad5d938798b",
+    "type": "split",
+    "children": [
+      {
+        "id": "e99a930526c72abf",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "92d4630dd701ef87",
+            "type": "leaf",
+            "state": {
+              "type": "backlink",
+              "state": {
+                "file": "Views/System/Edit Serials.md",
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical",
+                "showSearch": false,
+                "searchQuery": "",
+                "backlinkCollapsed": false,
+                "unlinkedCollapsed": true
+              },
+              "icon": "links-coming-in",
+              "title": "Backlinks for Edit Serials"
+            }
+          },
+          {
+            "id": "9dfe5bb50a08a809",
+            "type": "leaf",
+            "state": {
+              "type": "outgoing-link",
+              "state": {
+                "file": "Views/System/Edit Serials.md",
+                "linksCollapsed": false,
+                "unlinkedCollapsed": true
+              },
+              "icon": "links-going-out",
+              "title": "Outgoing links from Edit Serials"
+            }
+          },
+          {
+            "id": "7550347f46a613cd",
+            "type": "leaf",
+            "state": {
+              "type": "tag",
+              "state": {
+                "sortOrder": "frequency",
+                "useHierarchy": true,
+                "showSearch": false,
+                "searchQuery": ""
+              },
+              "icon": "lucide-tags",
+              "title": "Tags"
+            }
+          },
+          {
+            "id": "2c22947854efc665",
+            "type": "leaf",
+            "state": {
+              "type": "all-properties",
+              "state": {
+                "sortOrder": "frequency",
+                "showSearch": false,
+                "searchQuery": ""
+              },
+              "icon": "lucide-archive",
+              "title": "All properties"
+            }
+          },
+          {
+            "id": "c7f9b31810921a91",
+            "type": "leaf",
+            "state": {
+              "type": "outline",
+              "state": {
+                "file": "Views/System/Edit Serials.md",
+                "followCursor": false,
+                "showSearch": false,
+                "searchQuery": ""
+              },
+              "icon": "lucide-list",
+              "title": "Outline of Edit Serials"
+            }
+          },
+          {
+            "id": "7826c831b54c2f86",
+            "type": "leaf",
+            "state": {
+              "type": "git-view",
+              "state": {},
+              "icon": "git-pull-request",
+              "title": "Source Control"
+            }
+          }
+        ],
+        "currentTab": 5
+      }
+    ],
+    "direction": "horizontal",
+    "width": 300
+  },
+  "left-ribbon": {
+    "hiddenItems": {
+      "switcher:Open quick switcher": false,
+      "graph:Open graph view": false,
+      "canvas:Create new canvas": false,
+      "daily-notes:Open today's daily note": false,
+      "templates:Insert template": false,
+      "command-palette:Open command palette": false,
+      "bases:Create new base": false,
+      "obsidian-git:Open Git source control": false
+    }
+  },
+  "active": "d4cf46206b7bac71",
+  "lastOpenFiles": [
+    "assets/Pasted image 20260306173236.png",
+    "Views/System/0.System Setup Menu.md",
+    "Views/System/Edit Serials.md",
+    "assets/Pasted image 20260306172536.png",
+    "Views/Main Menu.md",
+    "Views/Produce to Goal",
+    "Views/System",
+    "Views/Reports",
+    "Views/Product",
+    "Views/Print Labels.md",
+    "Legacy Database Schema.md",
+    "Edit Goals.md",
+    "Views/Configuration/0.Configuration Menu.md",
+    "assets/Pasted image 20260306170316.png",
+    "assets/Pasted image 20260306170258.png",
+    "assets/Pasted image 20260306170232.png",
+    "assets/Pasted image 20260306170207.png",
+    "assets/Pasted image 20260306170144.png",
+    "New Scale Config.md",
+    "Logging and Telemetry.md",
+    "Language and Localization.md",
+    "Glossary.md",
+    "Global User Input.md",
+    "Devices.md",
+    "Data Model.md",
+    "Authentication and Authorization.md",
+    "Application Configuration.md",
+    "Views/Configuration/Application Functions.md",
+    "Views/Configuration/Calibrate Touch Panel.md",
+    "Views/Configuration/Edit Configuration Master.md",
+    "Views/Configuration/Edit Cross Reference.md",
+    "Views/Configuration/Edit Devices.md",
+    "Views/Configuration/Edit Item Modify.md",
+    "Views/Configuration/Edit Operators.md",
+    "Views/Configuration/Edit User Bars.md",
+    "Views/Configuration/Edit User Dates.md",
+    "assets/Pasted image 20260306164800.png",
+    "assets/Pasted image 20260306163549.png",
+    "assets/Pasted image 20260306162005.png",
+    "assets/Pasted image 20260306161206.png",
+    "Obsidian-Templates",
+    "Views/Configuration",
+    "Business Rules"
+  ]
+}
