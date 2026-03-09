@@ -13,12 +13,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Data Models/Reports/Production Report - Data Model.md",
+                "file": "0.New SLC Redevelopment.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "Production Report - Data Model"
+              "title": "0.New SLC Redevelopment"
             }
           },
           {
@@ -108,7 +108,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "Data Models/Reports/Production Report - Data Model.md",
+                "file": "0.New SLC Redevelopment.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -118,7 +118,7 @@
                 "unlinkedCollapsed": true
               },
               "icon": "links-coming-in",
-              "title": "Backlinks for Production Report - Data Model"
+              "title": "Backlinks for 0.New SLC Redevelopment"
             }
           },
           {
@@ -127,12 +127,12 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "Data Models/Reports/Production Report - Data Model.md",
+                "file": "0.New SLC Redevelopment.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               },
               "icon": "links-going-out",
-              "title": "Outgoing links from Production Report - Data Model"
+              "title": "Outgoing links from 0.New SLC Redevelopment"
             }
           },
           {
@@ -170,13 +170,13 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "Data Models/Reports/Production Report - Data Model.md",
+                "file": "0.New SLC Redevelopment.md",
                 "followCursor": false,
                 "showSearch": false,
                 "searchQuery": ""
               },
               "icon": "lucide-list",
-              "title": "Outline of Production Report - Data Model"
+              "title": "Outline of 0.New SLC Redevelopment"
             }
           },
           {
@@ -210,52 +210,52 @@
   },
   "active": "d4cf46206b7bac71",
   "lastOpenFiles": [
-    "assets/Pasted image 20260309134619.png",
-    "Views/Reports/Production Report.md",
+    "Business Requirements/BRD.md",
+    "0.New SLC Redevelopment.md",
+    "2026-03-09.md",
+    "Glossary.md",
+    "URL.md",
+    "Untitled.canvas",
+    "Business Rules/Authentication/BR-Authentication-001 Username and Password.md",
+    "Business Requirements",
+    "Views/Main Menu.md",
+    "Business Rules/Product",
+    "Business Rules/Print Labels",
+    "Business Rules/Reporting",
+    "Business Rules/Produce to Goal",
+    "Business Rules/System",
+    "Business Rules/Configuration",
+    "Business Rules/Authorization",
+    "Business Rules/Telemetry",
+    "Business Rules/Untitled.md",
+    "Business Rules/Logging",
+    "Data Models/Reports/Serials to CSV Report - Data Model.md",
     "Data Models/Reports/Production Report - Data Model.md",
-    "Views/Reports/Product List Report.md",
     "Data Models/Reports/Product List Report - Data Model.md",
-    "assets/Pasted image 20260309134152.png",
-    "Views/Reports/Serials to CSV Report.md",
-    "Views/Reports/Item Production Report.md",
-    "Views/Reports/0.Report Menu.md",
     "Data Models/Reports/Item Production Report - Data Model.md",
+    "Views/Reports/Serials to CSV Report.md",
+    "Views/Reports/Production Report.md",
+    "Views/Reports/Product List Report.md",
+    "Views/Reports/Item Production Report.md",
+    "Data Models/Product - Data Model.md",
+    "Logging and Telemetry.md",
+    "Data Models/Serial - Data Model.md",
+    "Data Models/Data Tables - Export-Import.md",
+    "assets/Pasted image 20260309134619.png",
+    "assets/Pasted image 20260309134152.png",
+    "Views/Reports/0.Report Menu.md",
     "Obsidian-Templates/Untitled.md",
     "Obsidian-Templates/Business Rule Template.md",
     "assets/Pasted image 20260309133309.png",
-    "Views/Main Menu.md",
     "Views/Product/Product View.md",
     "Views/Print Labels/Print Labels.md",
     "Views/UI Chrome.md",
-    "Views/Produce to Goal/Produce to Goal.md",
-    "Devices.md",
-    "Edit Product Process.md",
-    "Patterns of Display.md",
     "assets/Pasted image 20260309120728.png",
     "assets/Pasted image 20260309120602.png",
     "assets/Pasted image 20260309120514.png",
-    "Views/Print Labels",
     "assets/Pasted image 20260309115816.png",
-    "Data Models/Reports",
-    "Data Models/Reports/Serials to CSV Report - Data Model.md",
     "assets/Pasted image 20260309114702.png",
     "assets/Pasted image 20260309114640.png",
-    "assets/Pasted image 20260309114610.png",
-    "Views/Configuration/Edit Goals.md",
-    "Glossary.md",
-    "assets/Pasted image 20260309113953.png",
-    "Untitled.canvas",
-    "2026-03-09.md",
-    "Data Models/Data Tables - Export-Import.md",
-    "Data Models/Product - Data Model.md",
-    "Data Models/Serial - Data Model.md",
-    "Data Models",
-    "Views/Produce to Goal",
-    "Views/System",
-    "Views/Reports",
-    "Views/Product",
-    "Obsidian-Templates",
-    "Views/Configuration",
-    "Business Rules"
+    "assets/Pasted image 20260309114610.png"
   ]
 }
