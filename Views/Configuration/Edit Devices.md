@@ -20,7 +20,7 @@ Create, edit, delete devices.  [printers, scanners]
 	- default: none
 - Model
 	- Drop Down List
-	- [ ] Elements stored in [[Data Model]]  e.g [none, Wintronix, Datamax Prodigy] etc
+	- [ ] Elements stored in [[Data Tables - Export-Import]]  e.g [none, Wintronix, Datamax Prodigy] etc
 	- Required: true
 	- default: none
 - IP Address
@@ -41,7 +41,7 @@ Create, edit, delete devices.  [printers, scanners]
 	- default: none
 - Baud
 	- Textbox, integer
-	- [ ] May wish to consider drop down list with defined values [300,1200,2400,9600,3600 etc]  [[Data Model]]
+	- [ ] May wish to consider drop down list with defined values [300,1200,2400,9600,3600 etc]  [[Data Tables - Export-Import]]
 	- Required: true
 	- default: none
 - Input Buffer Size
@@ -73,7 +73,7 @@ Create, edit, delete devices.  [printers, scanners]
 	- default: none
 - Stop Bits
 	- Textbox, text value
-	- Validation: consider a DDL of options [none, 0, 1.5, 2]  [[Data Model]]
+	- Validation: consider a DDL of options [none, 0, 1.5, 2]  [[Data Tables - Export-Import]]
 	- Required: false
 	- Default: none
 - Generic Printer

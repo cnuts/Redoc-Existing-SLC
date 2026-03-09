@@ -12,7 +12,7 @@ Authorization: Operator
 	- [ ] Data Source of display
 	- Action:  Each row is selectable in the table
 	- Action: Upon selection, a row is editable
-	- Option value must only allow the selection of a value predefined in the [[Data Model]]
+	- Option value must only allow the selection of a value predefined in the [[Data Tables - Export-Import]]
 - Find
 	- Action: find by option name
 	- [ ] Not a good UI pattern

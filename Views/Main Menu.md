@@ -7,11 +7,16 @@ Authorization: none
 # Display Elements
 - [[UI Chrome]]
 - Print Labels
+	- Action: [[Print Labels ]] View
 - Product
+	- Action: [[Product View]]
 - Reports
+	- Action: [[0.Report Menu]]
 - Config [[0.Configuration Menu]]
 - System
-- Product to Goal
+	- Action: [[0.System Setup Menu]]
+- Produce to Goal
+	- Action: [[Product View]]
 - Exit
 - Mode: Default
 	- [ ]  What are the other options for this and what does it mean from display and function?

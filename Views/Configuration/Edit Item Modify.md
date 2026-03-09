@@ -15,7 +15,7 @@ Edit items
 - Lot
 	- Drop down
 	- [ ] Multiple select?
-	- [ ] [[Data Model]]
+	- [ ] [[Data Tables - Export-Import]]
 	- Required: true
 	- Default: "None"
 - Price

@@ -16,3 +16,6 @@ Light weight grid with the following features:
 
 # Function Icons
 Use broadly understood function icons or add, delete, cancel, back, exit etc
+
+# Single Product Selector
+- [ ] This pattern appears in several cases in the legacy application.  Will need to be reimplemented - appears as a searchable list with finder. Selection return select to parent view.

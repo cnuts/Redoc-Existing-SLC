@@ -8,7 +8,7 @@ Authorization: Operator
 # Display Elements
 - [[UI Chrome]]
 - Table, existing operators
-	- Data Source: [[Data Model]]
+	- Data Source: [[Data Tables - Export-Import]]
 		- Operator
 		- First Name
 		- Last Name
@@ -28,12 +28,12 @@ Authorization: Operator
 		- Password
 		- - Password field, input
 			- [ ] Validation: max, min length, special characters
-			- [ ] [[Data Model]]
+			- [ ] [[Data Tables - Export-Import]]
 			- [ ] [[Application Configuration]] ability to define the validation rules per configuration
 				- Required field
 		- Language
 			- Drop down list, input, single selection
-				- [[Data Model]], [[Application Configuration]]  
+				- [[Data Tables - Export-Import]], [[Application Configuration]]  
 					- [English, Spanish, French]
 				- Default to English
 		- Add

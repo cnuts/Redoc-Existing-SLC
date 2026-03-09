@@ -7,7 +7,7 @@ Authorization: Operator
 # Display Elements
 
 Display Table
-	- Data source: [[Data Model]], [[Application Configuration]]
+	- Data source: [[Data Tables - Export-Import]], [[Application Configuration]]
 	- Display Columns
 		- Option Name
 		- Option Value

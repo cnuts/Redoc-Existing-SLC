@@ -7,7 +7,7 @@ Authorization: Operator
 How a user to create, edit and delete valid processes
 - [ ] Define: what is a valid process?  Are there invalid ones?
 - [ ] Define: what does this wire up to elsewhere?
-- [ ] See [[Data Model]]
+- [ ] See [[Data Tables - Export-Import]]
 # Display Elements
 
 Process
