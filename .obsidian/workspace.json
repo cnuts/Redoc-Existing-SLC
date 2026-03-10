@@ -13,12 +13,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "0.New SLC Redevelopment.md",
+                "file": "1.Todo Items.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "0.New SLC Redevelopment"
+              "title": "1.Todo Items"
             }
           }
         ]
@@ -53,7 +53,7 @@
             "state": {
               "type": "search",
               "state": {
-                "query": "Deploymen",
+                "query": "256",
                 "matchingCase": false,
                 "explainSearch": false,
                 "collapseAll": false,
@@ -74,8 +74,7 @@
               "title": "Bookmarks"
             }
           }
-        ],
-        "currentTab": 1
+        ]
       }
     ],
     "direction": "horizontal",
@@ -95,7 +94,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "0.New SLC Redevelopment.md",
+                "file": "1.Todo Items.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -105,7 +104,7 @@
                 "unlinkedCollapsed": true
               },
               "icon": "links-coming-in",
-              "title": "Backlinks for 0.New SLC Redevelopment"
+              "title": "Backlinks for 1.Todo Items"
             }
           },
           {
@@ -114,12 +113,12 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "0.New SLC Redevelopment.md",
+                "file": "1.Todo Items.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               },
               "icon": "links-going-out",
-              "title": "Outgoing links from 0.New SLC Redevelopment"
+              "title": "Outgoing links from 1.Todo Items"
             }
           },
           {
@@ -157,13 +156,13 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "0.New SLC Redevelopment.md",
+                "file": "1.Todo Items.md",
                 "followCursor": false,
                 "showSearch": false,
                 "searchQuery": ""
               },
               "icon": "lucide-list",
-              "title": "Outline of 0.New SLC Redevelopment"
+              "title": "Outline of 1.Todo Items"
             }
           },
           {
@@ -197,15 +196,19 @@
   },
   "active": "a4c54c11ffc0f0b9",
   "lastOpenFiles": [
+    "Business Rules/Authentication/BR-Auth-00003- Password rules must be configurable..md",
+    "Business Rules/Authentication/Password storage must stored with SHA512 or greater and include a unique salt.md",
+    "Business Rules/Authentication/BR-Authentication-001 Username and Password.md",
+    "Business Requirements/Untitled.md",
+    "1.Todo Items.md",
+    "0.New SLC Redevelopment.md",
     "Business Rules/Scale IDs are unique per plant.md",
     "Views/Patterns of Display.md",
     "Views/Main Menu.md",
     "Views/Login.md",
     "Data Models/Product-Process.md",
     "Data Models/Serial - Data Model.md",
-    "0.New SLC Redevelopment.md",
     "Data Models/Labels.md",
-    "1.Todo Items.md",
     "Integrations.md",
     "Inven Host Message Program.md",
     "assets/Pasted image 20260310163826.png",
@@ -220,11 +223,7 @@
     "Language and Localization.md",
     "Glossary.md",
     "Global User Input.md",
-    "Devices.md",
-    "Views/UI Chrome.md",
-    "Views/Configuration/Edit Operators.md",
     "assets/Pasted image 20260310155248.png",
-    "Data Models/1.Legacy ER diagram.md",
     "Untitled.canvas",
     "Business Requirements",
     "Business Rules/Product",

@@ -1,6 +1,6 @@
 ---
 Risk-Level: P0
-Business-Rule-Id: BR-Authentication-001
+Business-Rule-Id: BR-Auth-001
 Deprecated: false
 ---
 
