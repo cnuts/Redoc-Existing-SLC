@@ -14,7 +14,7 @@ Authorization: none
 	- [ ] action, [[Authentication and Authorization]]
 - Cancel: button -
 	- [ ] follow on action
-- [[touch keyboard]]
+- [[Touch keyboard]]
 	- [ ] when appear, when kid
 
 # Validation Rules
@@ -27,6 +27,12 @@ Field Length and Content
 
 - [ ] Define mode variants
 - [ ] Magic spots
+- [ ] Scan for other scales with the same ID
+
+Action:
+Check for [[login service]] based on setting, else authenticate locally
+Action:
+- [ ] Prior to login, the printer needs to check the network for other scales with the same scale ID.  I'm not sure exactly how this would happen.  A broadcast may not find other scales - is there a centralized way?  Perhaps the login service can be extended to identify hostname?
 
 # Redevelopment Notes
 
