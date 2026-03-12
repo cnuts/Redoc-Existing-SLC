@@ -1,6 +1,6 @@
 
 
-# Authenciation
+# Authentication
 
 - [ ] User authentication
 - [ ] API authentication - remotes
@@ -22,3 +22,7 @@ Role Examples
 	Label Administrator
 	
 
+# Business Rules
+- [[BR-Auth-001 Username and Password]]
+- [[BR-Auth-00002 Password storage must stored with SHA512 or greater and include a unique salt]]
+- [[BR-Auth-00003- Password rules must be configurable.]]

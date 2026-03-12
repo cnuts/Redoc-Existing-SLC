@@ -1,3 +1,5 @@
+Valid Process syn.
+
 - A product-process is a set of steps, each step is a device interaction. 
 - A product-process may be customized by based on product code.
 - It may be customized based on Product Code - think of it like routing logic.

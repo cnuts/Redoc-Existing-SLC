@@ -4,11 +4,53 @@
     "type": "split",
     "children": [
       {
-        "id": "3d7d179090a6ff63",
+        "id": "f6fa1b7bb2e1f480",
         "type": "tabs",
         "children": [
           {
-            "id": "a4c54c11ffc0f0b9",
+            "id": "e17b0d0210fe1718",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "Glossary.md",
+                "mode": "source",
+                "source": false
+              },
+              "icon": "lucide-file",
+              "title": "Glossary"
+            }
+          },
+          {
+            "id": "cf16780028764890",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "Obsidian-Templates/Business Rule Template.md",
+                "mode": "source",
+                "source": false
+              },
+              "icon": "lucide-file",
+              "title": "Business Rule Template"
+            }
+          },
+          {
+            "id": "055e2344338eccdc",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "Prompt Notes.md",
+                "mode": "source",
+                "source": false
+              },
+              "icon": "lucide-file",
+              "title": "Prompt Notes"
+            }
+          },
+          {
+            "id": "e566658d96878f18",
             "type": "leaf",
             "state": {
               "type": "markdown",
@@ -21,7 +63,8 @@
               "title": "1.Todo Items"
             }
           }
-        ]
+        ],
+        "currentTab": 2
       }
     ],
     "direction": "vertical"
@@ -53,7 +96,7 @@
             "state": {
               "type": "search",
               "state": {
-                "query": "256",
+                "query": "site configuration options",
                 "matchingCase": false,
                 "explainSearch": false,
                 "collapseAll": false,
@@ -78,7 +121,7 @@
       }
     ],
     "direction": "horizontal",
-    "width": 300
+    "width": 369.5
   },
   "right": {
     "id": "73cd9ad5d938798b",
@@ -194,54 +237,53 @@
       "obsidian-git:Open Git source control": false
     }
   },
-  "active": "a4c54c11ffc0f0b9",
+  "active": "055e2344338eccdc",
   "lastOpenFiles": [
-    "Business Rules/Authentication/BR-Auth-00003- Password rules must be configurable..md",
-    "Business Rules/Authentication/Password storage must stored with SHA512 or greater and include a unique salt.md",
-    "Business Rules/Authentication/BR-Authentication-001 Username and Password.md",
-    "Business Requirements/Untitled.md",
-    "1.Todo Items.md",
     "0.New SLC Redevelopment.md",
-    "Business Rules/Scale IDs are unique per plant.md",
-    "Views/Patterns of Display.md",
-    "Views/Main Menu.md",
-    "Views/Login.md",
-    "Data Models/Product-Process.md",
-    "Data Models/Serial - Data Model.md",
-    "Data Models/Labels.md",
-    "Integrations.md",
-    "Inven Host Message Program.md",
-    "assets/Pasted image 20260310163826.png",
-    "Data Models/0.Legacy Database Schema.md",
-    "Data Models/Product - Data Model.md",
-    "Views/Touch keyboard.md",
-    "Views/0.Views and Shared Components - MOC.md",
-    "Views/Configuration/Test Touch Panel.md",
-    "MOC.md",
-    "Message Host.md",
-    "Logging and Telemetry.md",
-    "Language and Localization.md",
+    "progress-SLC/pallets/palletlabel.p",
+    "progress-SLC/pallets/ord-plt-lbl.p",
+    "progress-SLC/pallets/open-pallets.w",
+    "progress-SLC/pallets/cancelpalletdtl.p",
+    "progress-SLC/pallets/d-palletdet.w",
+    "progress-SLC/pallets/b-pallethdr.w",
+    "progress-SLC/pallets/addpalletdtl.p",
+    "progress-SLC/pallets",
+    "progress-SLC/load/populate-host.p",
+    "progress-SLC/load/copy-label-engine.p",
+    "Prompt Notes.md",
+    "progress-SLC/images/z.bmp",
+    "progress-SLC/images/y.bmp",
+    "progress-SLC/images/x.bmp",
+    "progress-SLC/images/wing-u.bmp",
+    "progress-SLC/images/wing-i.bmp",
+    "progress-SLC/images/white.bmp",
+    "progress-SLC/images/w.bmp",
+    "progress-SLC/images/vanity.bmp",
+    "progress-SLC/images/v.bmp",
+    "progress-SLC/images/Update.png",
+    "1.Todo Items.md",
+    "Obsidian-Templates/Business Rule Template.md",
+    "Data Models/Device/Device - legacy.md",
     "Glossary.md",
-    "Global User Input.md",
-    "assets/Pasted image 20260310155248.png",
-    "Untitled.canvas",
-    "Business Requirements",
-    "Business Rules/Product",
-    "Business Rules/Print Labels",
-    "Business Rules/Reporting",
-    "Business Rules/Produce to Goal",
-    "Business Rules/System",
-    "Business Rules/Configuration",
-    "Business Rules/Authorization",
-    "Business Rules/Telemetry",
-    "Business Rules/Logging",
-    "assets/Pasted image 20260309134619.png",
-    "assets/Pasted image 20260309134152.png",
-    "assets/Pasted image 20260309133309.png",
-    "assets/Pasted image 20260309120728.png",
-    "assets/Pasted image 20260309120602.png",
-    "assets/Pasted image 20260309120514.png",
-    "assets/Pasted image 20260309115816.png",
-    "assets/Pasted image 20260309114702.png"
+    "Data Models/Operator/Appfunction-Operator-OperatorAppfunction - legacy.md",
+    "Data Models/Operator/Operator - legacy.md",
+    "Data Models/Operator/Operator.md",
+    "Data Models/1. Legacy ER Diagram.md",
+    "Data Models/0.Legacy Database Schema.md",
+    "Data Models/Site Configuration Option/Site Configuration Options.md",
+    "Data Models/Site Configuration Option/Site Configuration Options - legacy.md",
+    "Data Models/Serial/Serial - legacy.md",
+    "Data Models/Serial/Serial to CSV.md",
+    "Data Models/UserBar/UserBar - legacy.md",
+    "Data Models/False Midnight - Concept.md",
+    "Data Models/Department - Concept.md",
+    "Data Models/Data Tables - Export-Import.md",
+    "Data Models/Reports/Serials to CSV Report -legacy.md",
+    "Data Models/Reports/Production Report - legacy.md",
+    "Data Models/Reports/Serials to CSV Report - Data Model.md",
+    "Data Models/Reports/Production Report - Data Model.md",
+    "Data Models/Reports/Product List Report - legacy.md",
+    "Data Models/Reports/Product List Report - Data Model.md",
+    "Untitled.canvas"
   ]
 }

@@ -15,7 +15,7 @@ Product definition, add, copy, delete - organized into three tabs
 
 # Actions
 - CRUD operators
-- [[Product - Data Model]]
+- [[Product]]
 - FIND - find individual products by Product Code
 - [ ] Browse data?
 # Redevelopment Notes
